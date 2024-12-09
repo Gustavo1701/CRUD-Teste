@@ -77,71 +77,79 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4">
-      <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl mb-4 text-center">
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      {/* Formulário de Criação/Edicao */}
+      <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">
           {editingUser ? 'Editar Usuário' : 'Criar Novo Usuário'}
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Nome de usuário</label>
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Nome de usuário</label>
             <input
               type="text"
               value={nome_usuario}
               onChange={(e) => setNomeUsuario(e.target.value)}
-              className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Senha</label>
+
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Senha</label>
             <input
               type="password"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
-              className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Data de Nascimento</label>
+
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Data de Nascimento</label>
             <input
               type="date"
               value={data_nascimento}
               onChange={(e) => setDataNascimento(e.target.value)}
-              className="w-full p-2 mt-1 border border-gray-300 rounded-md"
+              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
+
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md"
+            className="w-full py-3 bg-blue-500 text-white text-lg rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {editingUser ? 'Atualizar Usuário' : 'Criar Usuário'}
           </button>
         </form>
       </div>
 
-      <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
-        <h2 className="text-2xl mb-4 text-center">Lista de Usuários</h2>
+      {/* Lista de Usuários */}
+      <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-8">
+        <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">Lista de Usuários</h2>
         {usuarios.length > 0 ? (
           <ul>
             {usuarios.map((user) => (
-              <li key={user.id} className="mb-4 p-4 bg-gray-100 rounded-md flex justify-between items-center">
+              <li
+                key={user.id}
+                className="mb-4 p-4 bg-gray-50 rounded-md flex justify-between items-center shadow-sm"
+              >
                 <div>
-                  <p className="font-bold">{user.nome_usuario}</p>
-                  <p>{user.data_nascimento}</p>
+                  <p className="font-semibold text-lg text-gray-800">{user.nome_usuario}</p>
+                  <p className="text-sm text-gray-500">{user.data_nascimento}</p>
                 </div>
-                <div>
+                <div className="flex space-x-3">
                   <button
                     onClick={() => handleEdit(user)}
-                    className="bg-yellow-500 text-white py-1 px-4 rounded-md mr-2"
+                    className="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                   >
                     Editar
                   </button>
                   <button
                     onClick={() => handleDelete(user.id)}
-                    className="bg-red-500 text-white py-1 px-4 rounded-md"
+                    className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
                   >
                     Deletar
                   </button>
@@ -150,11 +158,12 @@ const App = () => {
             ))}
           </ul>
         ) : (
-          <p>Não há usuários cadastrados.</p>
+          <p className="text-center text-gray-500">Não há usuários cadastrados.</p>
         )}
       </div>
     </div>
   );
+
 };
 
 export default App;
