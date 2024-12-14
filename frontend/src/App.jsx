@@ -110,8 +110,8 @@ const App = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">Data de Nascimento</label>
             <input
               type="date"
-              value={data_nascimento}
-              onChange={(e) => setDataNascimento(e.target.value)}
+              value={data_nascimento} // Certifique-se de que `data_nascimento` está no formato yyyy-mm-dd
+              onChange={(e) => setDataNascimento(e.target.value)} // A data será salva diretamente
               className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -138,8 +138,17 @@ const App = () => {
               >
                 <div>
                   <p className="font-semibold text-lg text-gray-800">{user.nome_usuario}</p>
-                  <p className="text-sm text-gray-500">{user.data_nascimento}</p>
+                  <p className="text-sm text-gray-500">
+                    <span className="inline">Data de nascimento: </span>
+                    {/* Formatando a data de nascimento sem as horas */}
+                    <span className="inline font-medium">
+                      {new Date(user.data_nascimento).toLocaleDateString('pt-BR', {
+                        timeZone: 'UTC', // Força o uso do horário UTC para evitar problemas com fusos horários
+                      })}
+                    </span>
+                  </p>
                 </div>
+
                 <div className="flex space-x-3">
                   <button
                     onClick={() => handleEdit(user)}

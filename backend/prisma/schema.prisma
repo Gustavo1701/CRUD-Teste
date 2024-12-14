@@ -12,5 +12,5 @@ model Usuario {
   id            Int      @id @default(autoincrement())
   nome_usuario  String
   senha         String
-  data_nascimento DateTime
+  data_nascimento Date
 }
