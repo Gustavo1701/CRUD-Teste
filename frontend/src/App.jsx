@@ -19,11 +19,37 @@ const App = () => {
     fetchUsuarios();
   }, []);
 
+  // ------------- Função para formatar CPF ----------------
+  const formatCpf = (value) => {
+    //Remover tudo que não for numero
+    value = value.replace(/\D/g, "");
+
+    //Aplicar a formatação do CPF (000.000.000-00)
+    if (value.length <= 3){
+      return value;
+    } else if (value.length <= 6) {
+      return value.replace(/(\d{3})(\d{0,3})/, "$1.$2");
+    } else if (value.length <= 9) {
+      return value.replace(/(\d{3})(\d{3})(\d{0,3})/, "$1.$2.$3");
+    } else {
+      return value.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, "$1.$2.$3-$4");
+    }
+  };
+
+  //-------1Função para lhe dar com a mudança do CPF---------
+  const handleCpfChange = (e) =>{
+    const formatadoCPF = formatCpf(e.target.value);
+    setCpf(formatadoCPF); //Atualizar o estado do CPF
+  }
+
   // Função para enviar o formulário (criar ou atualizar)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userData = { nome_usuario, senha, cpf, data_nascimento };
+    // ---- Remover os pontos e traços antes de enviar para o backend---------
+    const cpfNumeros = cpf.replace(/\D/g, ""); //Remove todos os caracteres não numericos
+
+    const userData = { nome_usuario, senha, cpf: cpfNumeros, data_nascimento };
 
     if (editingUser) {
       // Atualizar usuário
@@ -114,9 +140,10 @@ const App = () => {
             <input
               type="text"
               value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
+              onChange={handleCpfChange}
               className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              maxLength={14} // Limita o comprimento para o CPF formatado
             />
           </div>
 
@@ -124,8 +151,8 @@ const App = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">Data de Nascimento</label>
             <input
               type="date"
-              value={data_nascimento} // Certifique-se de que `data_nascimento` está no formato yyyy-mm-dd
-              onChange={(e) => setDataNascimento(e.target.value)} // A data será salva diretamente
+              value={data_nascimento}
+              onChange={(e) => setDataNascimento(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
