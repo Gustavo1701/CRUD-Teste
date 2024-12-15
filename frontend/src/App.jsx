@@ -5,6 +5,7 @@ const App = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [nome_usuario, setNomeUsuario] = useState('');
   const [senha, setSenha] = useState('');
+  const [cpf, setCpf] = useState('');
   const [data_nascimento, setDataNascimento] = useState('');
   const [editingUser, setEditingUser] = useState(null);
 
@@ -22,7 +23,7 @@ const App = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userData = { nome_usuario, senha, data_nascimento };
+    const userData = { nome_usuario, senha, cpf, data_nascimento };
 
     if (editingUser) {
       // Atualizar usuário
@@ -47,6 +48,7 @@ const App = () => {
     // Limpar o formulário após a operação
     setNomeUsuario('');
     setSenha('');
+    setCpf('');
     setDataNascimento('');
     setEditingUser(null);
 
@@ -60,6 +62,7 @@ const App = () => {
   const handleEdit = (user) => {
     setNomeUsuario(user.nome_usuario);
     setSenha(user.senha);
+    setCpf(user.cpf);
     setDataNascimento(user.data_nascimento.split('T')[0]);
     setEditingUser(user);
   };
@@ -107,6 +110,17 @@ const App = () => {
           </div>
 
           <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">CPF</label>
+            <input
+              type="text"
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Data de Nascimento</label>
             <input
               type="date"
@@ -138,6 +152,10 @@ const App = () => {
               >
                 <div>
                   <p className="font-semibold text-lg text-gray-800">{user.nome_usuario}</p>
+                  <p className='text-sm text-gray-500'>
+                    <span className='inline'>CPF: </span>
+                    <span className='inline font-medium'>{user.cpf}</span>
+                  </p>
                   <p className="text-sm text-gray-500">
                     <span className="inline">Data de nascimento: </span>
                     {/* Formatando a data de nascimento sem as horas */}

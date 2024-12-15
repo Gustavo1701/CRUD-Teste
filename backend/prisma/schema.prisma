@@ -9,8 +9,9 @@ generator client {
 }
 
 model Usuario {
-  id            Int      @id @default(autoincrement())
-  nome_usuario  String
-  senha         String
-  data_nascimento Date
+  id              Int      @id @default(autoincrement())
+  nome_usuario    String
+  senha           String
+  cpf             BigInt   @unique
+  data_nascimento DateTime
 }
